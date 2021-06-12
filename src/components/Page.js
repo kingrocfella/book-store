@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Link } from '@reach/router';
+import { v4 as uuidv4 } from 'uuid';
 import Icon from './Icon';
 import { CONSTANTS } from '../constants';
 
@@ -73,7 +74,9 @@ export default function Page({ className, pageTitle, filters, children }) {
         <>
           {filters && (
             <Filters>
-              {filters}{' '}
+              {filters.map(element => (
+                <div key={uuidv4()}>{element}</div>
+              ))}
               {view === CONSTANTS.LIST_VIEW ? (
                 <FlexGroup>
                   <ActiveLink>
