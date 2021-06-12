@@ -5,6 +5,7 @@ import styled from 'styled-components/macro';
 
 import Page from './Page';
 import Book from './Book';
+import EmptyResult from './EmptyResult';
 
 const StyledPage = styled(Page)`
   h1,
@@ -49,9 +50,9 @@ export default function BookDetails({ bookId, actions }) {
 
   if (!book) {
     return (
-      <Page>
-        <h2>Book not found!</h2>
-      </Page>
+      <div className="display-center">
+        <EmptyResult />
+      </div>
     );
   }
 

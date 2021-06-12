@@ -7,7 +7,7 @@ export default function EmptyResult() {
       <div className="display-center">
         <img src={EmptyIcon} height="60" width="60" alt="empty" />
       </div>
-      <h5 className="mt2">No records to be displayed!</h5>
+      <h5 className="mt2">No data to be displayed!</h5>
     </div>
   );
 }
