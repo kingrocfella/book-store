@@ -66,22 +66,36 @@ export default function BookDetails({ bookId, actions }) {
         <div className="mt3">
           <Table>
             <tbody>
-              <tr>
-                <td>Publisher: </td>
-                <td>{book?.publisher}</td>
-              </tr>
-              <tr>
-                <td>ISBN13:</td>
-                <td>{book?.primary_isbn13}</td>
-              </tr>
-              <tr>
-                <td>Best Sellers Rank:</td>
-                <td>{book?.rank}</td>
-              </tr>
-              <tr>
-                <td>Weeks on Best Sellers List:</td>
-                <td>{book?.weeks_on_list}</td>
-              </tr>
+              {book?.publisher && (
+                <tr>
+                  <td>Publisher: </td>
+                  <td>{book?.publisher}</td>
+                </tr>
+              )}
+              {book?.primary_isbn13 && (
+                <tr>
+                  <td>ISBN13:</td>
+                  <td>{book?.primary_isbn13}</td>
+                </tr>
+              )}
+              {book?.rank && (
+                <tr>
+                  <td>Best Sellers Rank:</td>
+                  <td>{book?.rank}</td>
+                </tr>
+              )}
+              {book?.weeks_on_list && (
+                <tr>
+                  <td>Weeks on Best Sellers List:</td>
+                  <td>{book?.weeks_on_list}</td>
+                </tr>
+              )}
+              {book?.description && !book?.primary_isbn13 && (
+                <tr>
+                  <td>Description:</td>
+                  <td>{book?.description}</td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </div>

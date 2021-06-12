@@ -55,7 +55,7 @@ export default function Overview({ actions }) {
       filters={[
         <Select
           data={data}
-          value={selected}
+          value={{ id: selected, value: selected }}
           handleChange={handleChange}
           labelText="Categories"
           keyValue
