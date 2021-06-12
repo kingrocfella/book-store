@@ -1,20 +1,20 @@
 import reducer from './index';
+import { DISPATCH_TYPES } from './types';
 
 describe('The main reducer', () => {
   const initialState = {
-    books: [],
-    saved: [],
+    listData: { books: [], saved: [] },
   };
 
   it('should load books', () => {
     expect(
       reducer(initialState, {
-        type: 'books_loaded',
+        type: DISPATCH_TYPES.BOOKS_SAVED,
         books: [
           { title: 'foo', author: 'bar' },
           { title: 'something', author: 'someone' },
         ],
-      }).books
+      }).listData.books
     ).toEqual([
       { title: 'foo', author: 'bar' },
       { title: 'something', author: 'someone' },
@@ -26,7 +26,7 @@ describe('The main reducer', () => {
       reducer(initialState, {
         type: 'book_added',
         book: { title: 'something', author: 'someone' },
-      }).saved
+      }).listData.saved
     ).toEqual([{ title: 'something', author: 'someone' }]);
   });
 
@@ -35,17 +35,18 @@ describe('The main reducer', () => {
       reducer(initialState, {
         type: 'book_saved_from_list',
         book: { title: 'something', author: 'someone' },
-      }).saved
+      }).listData.saved
     ).toEqual([{ title: 'something', author: 'someone' }]);
   });
 
   it('should remove a book', () => {
-    initialState.saved.push(
+    initialState.listData.saved.push(
       { title: 'A decent book', id: 1 },
       { title: 'A solid book', id: 2 }
     );
     expect(
-      reducer(initialState, { type: 'book_removed', book: { id: 1 } }).saved
+      reducer(initialState, { type: 'book_removed', book: { id: 1 } }).listData
+        .saved
     ).toEqual([{ title: 'A solid book', id: 2 }]);
   });
 });
