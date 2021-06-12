@@ -4,6 +4,8 @@ import styled from 'styled-components/macro';
 
 import { Link } from '@reach/router';
 import { SaveButton } from './Buttons';
+import { PAGE_ROUTES } from '../routes';
+import { CONSTANTS } from '../constants';
 
 const Anchor = styled(Link)`
   text-decoration: none;
@@ -15,9 +17,14 @@ const Details = styled.section`
   flex: 1;
 `;
 
+const ListDetails = styled.section`
+  flex: 1;
+  padding: 2rem;
+`;
+
 const Cover = styled.div`
   width: 150px;
-  height: 280px;
+  padding-bottom: 2rem;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -33,10 +40,17 @@ const Wrapper = styled.article`
   display: flex;
   justify-content: flex-start;
   width: 270px;
-  padding: 50px 10px;
+  heigth: 20rem;
+  padding: 20px 10px;
+  box-shadow: 9px 11px 19px -13px rgba(0, 0, 0, 0.57);
+  -webkit-box-shadow: 9px 11px 19px -13px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 9px 11px 19px -13px rgba(0, 0, 0, 0.57);
+  border-radius: 5px;
+  margin: 2rem;
+  background: #f0f0f0;
 
   ${({ view }) => {
-    if (view === 'list') {
+    if (view === CONSTANTS.LIST_VIEW) {
       return `
         align-items: flex-start;
         width: 100%;
@@ -87,22 +101,46 @@ const Description = styled.p`
   margin: 1em 0 2em 0;
 `;
 
+const ButtonSpace = styled.div`
+  margin: 1rem;
+  width: 8rem;
+`;
+
 export default function Book({ book, onSave, onRemove, saved, view }) {
+  const ConstDetail = (
+    <>
+      <Title>
+        <Anchor to={PAGE_ROUTES.bookdetail(book.id)}>
+          {book?.title?.toLowerCase()}
+        </Anchor>
+      </Title>
+      <Author>{book?.author}</Author>
+      {view === CONSTANTS.LIST_VIEW && (
+        <Description>{book?.description}</Description>
+      )}
+    </>
+  );
   return (
-    <Wrapper key={book.id} view={view}>
+    <Wrapper view={view}>
+      <ButtonSpace>
+        <SaveButton onSave={onSave} onRemove={onRemove} saved={saved} />
+      </ButtonSpace>
+
       <Cover>
-        <Anchor to={`/books/${book.id}`}>
-          <img src={book.image_url} alt={book.title} />
+        <Anchor to={PAGE_ROUTES.bookdetail(book?.id)}>
+          <img
+            src={book.image_url ?? book.book_image}
+            alt={book?.title}
+            height="200"
+            width="200"
+          />
         </Anchor>
       </Cover>
-      <Details>
-        <Title>
-          <Anchor to={`/books/${book.id}`}>{book.title.toLowerCase()}</Anchor>
-        </Title>
-        <Author>{book.author}</Author>
-        {view === 'list' && <Description>{book.description}</Description>}
-        <SaveButton onSave={onSave} onRemove={onRemove} saved={saved} />
-      </Details>
+      {view === CONSTANTS.LIST_VIEW ? (
+        <ListDetails>{ConstDetail}</ListDetails>
+      ) : (
+        <Details>{ConstDetail}</Details>
+      )}
     </Wrapper>
   );
 }
