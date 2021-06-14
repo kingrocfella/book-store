@@ -40,7 +40,7 @@ const BannerWrapper = styled.header`
 export default function Banner() {
   return (
     <BannerWrapper>
-      <Logo onClick={() => navigate(PAGE_ROUTES.home())}>
+      <Logo onClick={() => navigate('/')}>
         <Brandmark />
         Bookcues
       </Logo>

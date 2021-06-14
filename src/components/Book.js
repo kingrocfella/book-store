@@ -127,7 +127,7 @@ export default function Book({ book, onSave, onRemove, saved, view }) {
       </ButtonSpace>
 
       <Cover>
-        <Anchor to={PAGE_ROUTES.bookdetail(book?.id)}>
+        <Anchor to={book?.id ? PAGE_ROUTES.bookdetail(book?.id) : ''}>
           <img
             src={book.image_url ?? book.book_image}
             alt={book?.title}
