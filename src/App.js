@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Router } from '@reach/router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,30 +10,27 @@ import BookDetails from './components/BookDetails';
 import AddBook from './components/AddBook';
 import Banner from './components/Banner';
 import Overview from './Overview';
+import NotFound from './NotFound';
 import './App.css';
+import { PAGE_ROUTES } from './routes';
 
 export function App(props) {
-  const { actions, saved } = props;
   return (
     <>
       <Banner />
       <Router>
-        <Overview {...props} path="/*listName" />
-        <BookDetails {...props} path="books/:bookId" />
+        <Overview {...props} exact path={PAGE_ROUTES.home()} />
+        <BookDetails {...props} path={PAGE_ROUTES.bookdetail()} />
 
-        <Bookshelf books={saved} actions={actions} saved={saved} path="saved" />
-        <BookDetails actions={actions} books={saved} path="saved/:bookId" />
+        <Bookshelf {...props} path={PAGE_ROUTES.saved()} />
+        <BookDetails {...props} path={PAGE_ROUTES.savedbookdetail()} />
 
-        <AddBook actions={actions} path="books/new" />
+        <AddBook {...props} path={PAGE_ROUTES.addbook()} />
+        <NotFound path="*" />
       </Router>
     </>
   );
 }
-
-App.propTypes = {
-  actions: PropTypes.objectOf(PropTypes.func),
-  saved: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default connect(
   state => state,

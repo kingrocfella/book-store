@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import App from './App';
-import rootReducer, { initialState as defaultState } from './reducers';
+import rootReducer from './reducers';
+import { initialState as defaultState } from './reducers/types';
 import './index.css';
 
 const loadState = () => {
@@ -39,12 +42,13 @@ const store = createStore(
 );
 
 store.subscribe(() => {
-  saveState({ saved: store.getState().saved });
+  saveState(store.getState());
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer autoClose={7000} />
       <App />
     </Provider>
   </React.StrictMode>,

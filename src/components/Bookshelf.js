@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useNavigate, useLocation } from '@reach/router';
-
+import Sorter from './Sorter';
 import { Button } from './Buttons';
 import Icon from './Icon';
 import Page from './Page';
 import Book from './Book';
+import { PAGE_ROUTES } from '../routes';
+import { CONSTANTS } from '../constants';
 
 const Shelf = styled.div`
   display: flex;
@@ -17,64 +20,51 @@ const Shelf = styled.div`
   margin: 0 auto;
 `;
 
-export default function Bookshelf({ books, actions, saved }) {
+export default function Bookshelf({ actions }) {
+  const { saved } = useSelector(state => state?.listData);
   const navigate = useNavigate();
   const location = useLocation();
   const [, view] = location.search.match(/view=(grid|list)/) || [];
-  const [sortBy, setSortBy] = useState('title');
+  const [sortBy, setSortBy] = useState(CONSTANTS.SORT_DATA[0]);
 
-  const Sorter = (
-    <label key="sorter">
-      Sort by&nbsp;
-      <select onChange={e => setSortBy(e.target.value)} value={sortBy}>
-        <option>title</option>
-        <option>author</option>
-      </select>
-    </label>
-  );
   return (
     <Page
       pageTitle="Your Saved Books"
       filters={[
-        <Button onClick={() => navigate('/books/new')} key="add-new">
+        <Button onClick={() => navigate(PAGE_ROUTES.addbook())} key="add-new">
           <Icon icon="plus" /> Add new book
         </Button>,
-        Sorter,
+        <Sorter sortBy={sortBy} setSortBy={setSortBy} />,
       ]}
     >
       <Shelf>
-        {books
-          .sort(({ [sortBy]: a }, { [sortBy]: b }) =>
+        {saved
+          ?.sort(({ [sortBy]: a }, { [sortBy]: b }) =>
             a < b ? -1 : a > b ? 1 : 0
           )
-          .map(book => (
-            <Book
-              view={view}
-              book={book}
-              actions={actions}
-              key={book.primary_isbn13 || book.id}
-              onSave={() => {
-                actions.addBook(book);
-              }}
-              onRemove={() =>
-                actions.removeBook(
-                  saved.find(
-                    ({ id }) => id === (book.primary_isbn13 || book.id)
-                  )
-                )
-              }
-              saved={saved.some(
-                ({ id }) => id === (book.primary_isbn13 || book.id)
-              )}
-            />
-          ))}
+          .map(book => {
+            const unique = book.primary_isbn13 ?? book.id;
+            return (
+              <Book
+                view={view}
+                book={book}
+                actions={actions}
+                key={unique}
+                onSave={() => {
+                  actions.addBook(book);
+                }}
+                onRemove={() =>
+                  actions.removeBook(saved.find(({ id }) => id === unique))
+                }
+                saved={saved.some(({ id }) => id === unique)}
+              />
+            );
+          })}
       </Shelf>
     </Page>
   );
 }
 
 Bookshelf.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.object),
-  actions: PropTypes.objectOf(PropTypes.func),
-  saved: PropTypes.arrayOf(PropTypes.object),
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
 };

@@ -13,8 +13,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  width: 150px;
-  height: 40px;
+  padding: 0.4rem 1.5rem;
   ${Icon} {
     font-size: 0.75em;
     margin-top: 1px;
@@ -46,7 +45,7 @@ export const SaveButton = ({ saved, onSave, onRemove, className }) => {
         setState(false);
       }}
     >
-      <Icon icon="check" /> Saved to List
+      <Icon icon="check" /> Saved
     </TextButton>
   ) : (
     <Button
@@ -56,7 +55,7 @@ export const SaveButton = ({ saved, onSave, onRemove, className }) => {
         setState(true);
       }}
     >
-      <Icon icon="plus" /> Save to list
+      <Icon icon="plus" /> Save
     </Button>
   );
 };

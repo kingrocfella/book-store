@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Page, { Content } from './Page';
 
 import Icon from './Icon';
+import { PAGE_ROUTES } from '../routes';
 
 const Button = styled.button`
   border: 1px solid #d6216b;
@@ -113,10 +114,10 @@ export default function AddBook({ actions }) {
       return false;
     }
     actions.addBook(values);
-    navigate('/saved');
+    navigate(PAGE_ROUTES.saved());
     return true;
   };
-  console.log(errors);
+
   return (
     <FormPage pageTitle="Add New Book">
       <StyledForm>

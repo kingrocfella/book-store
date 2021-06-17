@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Link, navigate } from '@reach/router';
 import Icon from './Icon';
+import { PAGE_ROUTES } from '../routes';
 
 const Brandmark = styled(Icon).attrs(() => ({ icon: 'book-open' }))`
   color: #593ca2;
@@ -43,7 +44,7 @@ export default function Banner() {
         <Brandmark />
         Bookcues
       </Logo>
-      <StyledLink to="saved">Saved Books</StyledLink>
+      <StyledLink to={PAGE_ROUTES.saved()}>Saved Books</StyledLink>
     </BannerWrapper>
   );
 }

@@ -1,61 +1,17 @@
-### About this challenge
+# Bookcues application
 
-We are excited to see how you build frontend software, but we understand you're
-probably pretty busy. Instead of asking you to develop something from scratch,
-please spend a reasonable amount of time—hours, not days—refactoring some of the code in this
-application. Just make it better, in any way that you see fit. Our goal is to
-see how you improve existing code that you haven't encountered before.
+I made a couple of enhancements to the existing codebase I cloned from the repository. Below are the changes I made and reasons why I made them.
 
-### About the application
+1. I set up a global API service layer that handles everything that has to do with API calls. The layer consists of routes - for all API routes, errors - that handles all API errors and service that contains the global axios function that do the API calls.
+   This was done to keep the API calls scalable and maintainable as the API service layer is the single source of truth, thus if any changes needs to be made, it's done in one file and it reflects across the entire application as opposed to having to edit multiple files which could get messy as the codebase increases in size.
+2. I created a hooks folder to handle all custom application hooks. Using custom hooks helps abstract application logic and make them reusable across the application, thus preventing code duplication. In this application, I specifically used hooks for all the API calls. This feeds into the separation of concerns principle as the API calls logic could now be abstracted away from the components thus ensuring only component-specific logic resides in a component.
+3. I utilised CombineReducers function from Redux to ensure reducers in the application could be separated based on functions. The previous reducer logic encouraged adding all the reducers into one file which could get messy and complex as the codebase increases and the need for multiple reducers to handle several actions arises.
+4. Abstracted all the string constants into separate files and then referenced them by importing them directly. This ensures there's one source of truth and thus if changes only have to be made in one place. In this application, I abstracted the action types strings, API base url etc. and then referenced them in components where they're needed. This also prevents bugs arising from typos.
+5. Styled the Book component that is responsible for displaying the book image, author and book title. I also converted it into a reusable component and then imported into the BookDetails component and then deleted the existing code there that was doing the same job as the Book component.
+6. Created and styled some reusable components like Selectdropdown, Sorter, Spinner and EmptyResult. This also feeds into the separation of concerns principle thus making the codebase cleaner and more maintainable. Changes made to the Selectdropdown component reflects across all the components using it and thus reduces code duplication.
+7. Utilised optional chaining for values got from a third party (API responses) to prevent application from crashing due to missing data. This helps prevent bugs arising from data which the application has no control over.
+8. Persisted both the books and saved books data in redux local storage to prevent having to make an additional API call to get the books data in the BookDetail component, thus improving user experience and increasing application performance.
+9. Added a 404 Not Found page to handle when user trys to navigate to an unrecognised route thus preventing the application from crashing through this.
+10. Added a models file that helps format API results into data that would in the application. This ensure only one file is touched is changes need to be made and this would come in handly as the codebase grows and becomes more complex.
 
-The application showcases books on the NYTimes Bestsellers lists and allows you
-to build a collection of saved books.
-
-#### Running the application
-
-The app is built from `create-react-app`, so the usual `npm start` and `npm test` apply.
-
-You will need a [NYTimes Developer account](https://developer.nytimes.com/accounts/create);
-from there you can create an API key for the [Books API](https://developer.nytimes.com/docs/books-product/1/overview)
-by creating a [new app](https://developer.nytimes.com/my-apps) and enabling the Books API.
-
-Add your API key to the `.env` file for `REACT_APP_API_KEY` to make it available to the application.
-
-Next, in your local environment, run the following:
-
-```shell
-$ npm install
-$ npm start
-```
-
-**Note**: If you happen to be using NPM v7, which now blocks installs with
-incompatible peer dependencies, you can add the flag `--legacy-peer-deps` to the
-npm install command listed. That will force NPM to use older NPM install
-behaviors, which will work for this application.
-
-### Important notes
-
-- The application is deliberately written to be "not very clean code". It is **not** representative of good code at Appcues.
-- This README is intentionally sparse, so you'll have to read the code to understand how the application works.
-- **Please keep track of the amount of time you spend** working on cleaning this
-  code up. We'll need to know this when you submit your solution because it will
-  help adjust our expectations.
-
-### Submitting your work
-
-- We work in GitHub, so we want to review your code there too. However, please
-  do NOT submit a Pull Request to this repository because it will become visible
-  for other candidates (or even your current employer).
-
-- Instead, please do the following:
-  - Create a [private repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-repository-visibility) under your own GitHub account.
-  - Commit all of the code from this repository to the `main` branch in your new private repository as a starting point.
-  - Create a new branch in your private repository.
-  - Commit your changes and refactoring work to the new branch.
-  - Create a [Pull Request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests) based on your branch.
-  - **The pull request should include**:
-    - a description of what you changed and why
-    - how long you spent on the project
-  - Invite the GitHub user `@appcues-interviews` as a [collaborator](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-your-github-user-account/inviting-collaborators-to-a-personal-repository) on your private repository.
-
-Good luck with the assignment, and we hope you have fun with it!
+I spent a total of 13 - 15 hours on this project, optimising the codebase, enhancing the UI and updating the test cases.

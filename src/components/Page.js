@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Link } from '@reach/router';
+import { v4 as uuidv4 } from 'uuid';
 import Icon from './Icon';
+import { CONSTANTS } from '../constants';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -69,31 +71,35 @@ export default function Page({ className, pageTitle, filters, children }) {
     <Wrapper className={className}>
       <Headline>{pageTitle ? <h1>{pageTitle}</h1> : ''}</Headline>
       <Content>
-        {filters && (
-          <Filters>
-            {filters}{' '}
-            {view === 'list' ? (
-              <FlexGroup>
-                <ActiveLink>
-                  <Icon icon="th-list" />
-                </ActiveLink>
-                <ViewLink to="?view=grid">
-                  <Icon icon="th" />
-                </ViewLink>{' '}
-              </FlexGroup>
-            ) : (
-              <FlexGroup>
-                <ViewLink to="?view=list">
-                  <Icon icon="th-list" />
-                </ViewLink>
-                <ActiveLink>
-                  <Icon icon="th" />
-                </ActiveLink>
-              </FlexGroup>
-            )}
-          </Filters>
-        )}
-        {children}
+        <>
+          {filters && (
+            <Filters>
+              {filters.map(element => (
+                <div key={uuidv4()}>{element}</div>
+              ))}
+              {view === CONSTANTS.LIST_VIEW ? (
+                <FlexGroup>
+                  <ActiveLink>
+                    <Icon icon="th-list" />
+                  </ActiveLink>
+                  <ViewLink to={`?view=${CONSTANTS.GRID_VIEW}`}>
+                    <Icon icon="th" />
+                  </ViewLink>{' '}
+                </FlexGroup>
+              ) : (
+                <FlexGroup>
+                  <ViewLink to={`?view=${CONSTANTS.LIST_VIEW}`}>
+                    <Icon icon="th-list" />
+                  </ViewLink>
+                  <ActiveLink>
+                    <Icon icon="th" />
+                  </ActiveLink>
+                </FlexGroup>
+              )}
+            </Filters>
+          )}
+          {children}
+        </>
       </Content>
     </Wrapper>
   );

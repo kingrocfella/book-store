@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 const customRender = (
   ui,
   {
-    initialState = {},
+    initialState = { listData: { books: [], saved: [] } },
     reducer = state => state,
     store = createStore(reducer, initialState, compose(applyMiddleware(thunk))),
     ...options
