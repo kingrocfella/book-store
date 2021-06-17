@@ -1,17 +1,26 @@
-# Bookcues application
+# Book Store App.
 
-I made a couple of enhancements to the existing codebase I cloned from the repository. Below are the changes I made and reasons why I made them.
+This application is a bookstore that displays books and their details based on selected categories.
+This app consumes the free public [NYTimes Books API](https://developer.nytimes.com/docs/books-product/1/overview) API.
 
-1. I set up a global API service layer that handles everything that has to do with API calls. The layer consists of routes - for all API routes, errors - that handles all API errors and service that contains the global axios function that do the API calls.
-   This was done to keep the API calls scalable and maintainable as the API service layer is the single source of truth, thus if any changes needs to be made, it's done in one file and it reflects across the entire application as opposed to having to edit multiple files which could get messy as the codebase increases in size.
-2. I created a hooks folder to handle all custom application hooks. Using custom hooks helps abstract application logic and make them reusable across the application, thus preventing code duplication. In this application, I specifically used hooks for all the API calls. This feeds into the separation of concerns principle as the API calls logic could now be abstracted away from the components thus ensuring only component-specific logic resides in a component.
-3. I utilised CombineReducers function from Redux to ensure reducers in the application could be separated based on functions. The previous reducer logic encouraged adding all the reducers into one file which could get messy and complex as the codebase increases and the need for multiple reducers to handle several actions arises.
-4. Abstracted all the string constants into separate files and then referenced them by importing them directly. This ensures there's one source of truth and thus if changes only have to be made in one place. In this application, I abstracted the action types strings, API base url etc. and then referenced them in components where they're needed. This also prevents bugs arising from typos.
-5. Styled the Book component that is responsible for displaying the book image, author and book title. I also converted it into a reusable component and then imported into the BookDetails component and then deleted the existing code there that was doing the same job as the Book component.
-6. Created and styled some reusable components like Selectdropdown, Sorter, Spinner and EmptyResult. This also feeds into the separation of concerns principle thus making the codebase cleaner and more maintainable. Changes made to the Selectdropdown component reflects across all the components using it and thus reduces code duplication.
-7. Utilised optional chaining for values got from a third party (API responses) to prevent application from crashing due to missing data. This helps prevent bugs arising from data which the application has no control over.
-8. Persisted both the books and saved books data in redux local storage to prevent having to make an additional API call to get the books data in the BookDetail component, thus improving user experience and increasing application performance.
-9. Added a 404 Not Found page to handle when user trys to navigate to an unrecognised route thus preventing the application from crashing through this.
-10. Added a models file that helps format API results into data that would in the application. This ensure only one file is touched is changes need to be made and this would come in handly as the codebase grows and becomes more complex.
+### Live Demo
 
-I spent a total of 13 - 15 hours on this project, optimising the codebase, enhancing the UI and updating the test cases.
+The application can be viewed via the url: https://bookcues-store.pages.dev/
+
+### Local Installation
+
+TV Shows App requires [Node.js](https://nodejs.org/) v8+ to run.
+
+Install the dependencies and start the server after cloning this repository.
+
+```sh
+$ git clone https://github.com/kingrocfella/bookcues-store.git
+$ npm install
+$ npm start
+```
+
+## License
+
+MIT
+
+**Free Software, Hell Yeah!**
