@@ -1,7 +1,7 @@
 # Book Store App.
 
 This application is a bookstore that displays books and their details based on selected categories.
-This app consumes the free public [NYTimes Books API](https://developer.nytimes.com/docs/books-product/1/overview) API.
+This app consumes the free public [NYTimes Books](https://developer.nytimes.com/docs/books-product/1/overview) API.
 
 ### Live Demo
 
@@ -9,7 +9,7 @@ The application can be viewed via the url: https://bookcues-store.pages.dev/
 
 ### Local Installation
 
-TV Shows App requires [Node.js](https://nodejs.org/) v8+ to run.
+This App requires [Node.js](https://nodejs.org/) v8+ to run.
 
 Install the dependencies and start the server after cloning this repository.
 
